@@ -1,0 +1,25 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    border-radius: 30px;
+    background: #fe5f1e;
+    width: 210px;
+    padding: 16px;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        background-color: #f8733e;
+    }
+    &:active {
+        background-color: #fc5512;
+    }
+}
