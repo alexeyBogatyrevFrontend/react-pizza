@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
 
-const Sort = () => {
+const Sort = ({ sortType, setSortType }) => {
     const [popup, setPopup] = useState(false)
-    const [sort, setSort] = useState(0)
 
-    const typeSorts = ['популярности', 'цене', 'алфавиту']
+    const list = [
+        { name: 'популярности +', sort: '-rating' },
+        { name: 'популярности -', sort: 'rating' },
+        { name: 'возрастанию цены', sort: 'price' },
+        { name: 'убыванию цены', sort: '-price' },
+        { name: 'алфавиту [A - Я]', sort: 'title' },
+        { name: 'алфавиту [Я - А]', sort: '-title' },
+    ]
 
-    const currentSort = (index) => {
-        setSort(index)
+    const currentSort = (sort) => {
+        setSortType(sort)
         setPopup(false)
     }
 
@@ -27,17 +33,19 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setPopup(!popup)}>{typeSorts[sort]}</span>
+                <span onClick={() => setPopup(!popup)}>{sortType.name}</span>
             </div>
             <div className={popup ? 'sort__popup active' : 'sort__popup'}>
                 <ul>
-                    {typeSorts.map((type, index) => (
+                    {list.map((obj, index) => (
                         <li
-                            className={index === sort ? 'active' : ''}
+                            className={
+                                obj.sort === sortType.sort ? 'active' : ''
+                            }
                             key={index}
-                            onClick={() => currentSort(index)}
+                            onClick={() => currentSort(obj)}
                         >
-                            {type}
+                            {obj.name}
                         </li>
                     ))}
                 </ul>
