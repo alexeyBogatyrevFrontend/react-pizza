@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import './scss/app.scss'
 import Header from './components/header/Header'
@@ -11,14 +11,19 @@ import { AppContext } from './context/AppContext'
 // import pizzas from './pizzas.json'
 
 const App = () => {
+    const [search, setSearch] = useState('')
+    const [pagination, setPagination] = useState(1)
+
     return (
-        <AppContext.Provider value={{}}>
+        <AppContext.Provider
+            value={{ search, setSearch, pagination, setPagination }}
+        >
             <div className="wrapper">
                 <Header />
                 <div className="content">
                     <div className="container">
                         <Routes>
-                            <Route path="/home" element={<Home />} />
+                            <Route path="/home" exact element={<Home />} />
                             <Route path="/cart" element={<Cart />} />
                             <Route path="/not-found" element={<NotFound />} />
                             <Route
