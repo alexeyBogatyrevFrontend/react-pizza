@@ -8,8 +8,6 @@ import Cart from './pages/Cart'
 import NotFound from './pages/NotFound'
 import { AppContext } from './context/AppContext'
 
-// import pizzas from './pizzas.json'
-
 const App = () => {
     const [search, setSearch] = useState('')
     const [pagination, setPagination] = useState(1)

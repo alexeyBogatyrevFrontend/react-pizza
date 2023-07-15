@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSortType } from '../../redux/slices/filterSlice'
 
-const Sort = ({ sortType, setSortType }) => {
+const Sort = () => {
+    const sortType = useSelector((state) => state.filterSlice.sortType)
+    const dispatch = useDispatch()
+
     const [popup, setPopup] = useState(false)
 
     const list = [
@@ -13,7 +18,7 @@ const Sort = ({ sortType, setSortType }) => {
     ]
 
     const currentSort = (sort) => {
-        setSortType(sort)
+        dispatch(setSortType(sort))
         setPopup(false)
     }
 

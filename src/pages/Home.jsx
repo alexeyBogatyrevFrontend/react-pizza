@@ -5,15 +5,22 @@ import Skeleton from '../components/UI/pizzaLoader/Skeleton'
 import PizzaBlock from '../components/pizza-block/PizzaBlock'
 import { AppContext } from '../context/AppContext'
 import Pagination from '../components/pagination/Pagination'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
+    const { categoryId, sortType } = useSelector((state) => state.filterSlice)
+
     const [pizzas, setPizzas] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    const [categoryId, setCategoryId] = useState(0)
-    const [sortType, setSortType] = useState({
-        name: 'популярности',
-        sort: 'rating',
-    })
+
+    const categories = [
+        'Все',
+        'Мясные',
+        'Вегетарианские',
+        'Гриль',
+        'Острые',
+        'Закрытые',
+    ]
 
     const { search, pagination } = useContext(AppContext)
 
@@ -39,13 +46,10 @@ const Home = () => {
     return (
         <>
             <div className="content__top">
-                <Categories
-                    categoryId={categoryId}
-                    setCategoryId={setCategoryId}
-                />
-                <Sort sortType={sortType} setSortType={setSortType} />
+                <Categories categories={categories} />
+                <Sort />
             </div>
-            <h2 className="content__title">Все пиццы</h2>
+            <h2 className="content__title">{categories[categoryId]} пиццы</h2>
             <div className="content__items">
                 {isLoading
                     ? [...new Array(10)].map((_, i) => <Skeleton key={i} />)
