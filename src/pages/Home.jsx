@@ -1,15 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Categories from '../components/categories/Categories'
 import Sort from '../components/sort/Sort'
 import Skeleton from '../components/UI/pizzaLoader/Skeleton'
 import PizzaBlock from '../components/pizza-block/PizzaBlock'
-import { AppContext } from '../context/AppContext'
+
 import Pagination from '../components/pagination/Pagination'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
 const Home = () => {
-    const { categoryId, sortType } = useSelector((state) => state.filterSlice)
+    const { categoryId, sortType, pagination, search } = useSelector(
+        (state) => state.filterSlice
+    )
 
     const [pizzas, setPizzas] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -22,8 +24,6 @@ const Home = () => {
         'Острые',
         'Закрытые',
     ]
-
-    const { search, pagination } = useContext(AppContext)
 
     useEffect(() => {
         setIsLoading(true)

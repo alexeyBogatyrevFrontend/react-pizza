@@ -1,16 +1,22 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import c from './Pagination.module.scss'
-import { AppContext } from '../../context/AppContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPagination } from '../../redux/slices/filterSlice'
 
 const Pagination = () => {
-    const { pagination, setPagination } = useContext(AppContext)
+    const pagination = useSelector((state) => state.filterSlice.pagination)
+    const dispatch = useDispatch()
 
     return (
         <ul className={c.pagination}>
             <li
                 onClick={() =>
-                    setPagination((prev) => (prev !== 1 ? prev - 1 : prev - 0))
+                    dispatch(
+                        setPagination(
+                            pagination !== 1 ? pagination - 1 : pagination - 0
+                        )
+                    )
                 }
             >
                 {'<'}
@@ -23,14 +29,18 @@ const Pagination = () => {
                             : ''
                     }
                     key={index}
-                    onClick={() => setPagination(index + 1)}
+                    onClick={() => dispatch(setPagination(index + 1))}
                 >
                     {index + 1}
                 </li>
             ))}
             <li
                 onClick={() =>
-                    setPagination((prev) => (prev !== 3 ? prev + 1 : prev + 0))
+                    dispatch(
+                        setPagination(
+                            pagination !== 3 ? pagination + 1 : pagination + 0
+                        )
+                    )
                 }
             >
                 {'>'}
