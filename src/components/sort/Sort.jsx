@@ -1,21 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from '../../redux/slices/filterSlice'
+import { list } from '../../pages/Home'
 
 const Sort = () => {
     const sortType = useSelector((state) => state.filterSlice.sortType)
     const dispatch = useDispatch()
 
     const [popup, setPopup] = useState(false)
-
-    const list = [
-        { name: 'популярности +', sort: '-rating' },
-        { name: 'популярности -', sort: 'rating' },
-        { name: 'возрастанию цены', sort: 'price' },
-        { name: 'убыванию цены', sort: '-price' },
-        { name: 'алфавиту [A - Я]', sort: 'title' },
-        { name: 'алфавиту [Я - А]', sort: '-title' },
-    ]
 
     const currentSort = (sort) => {
         dispatch(setSortType(sort))

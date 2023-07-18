@@ -26,10 +26,20 @@ export const filterSlice = createSlice({
         setSearch: (state, action) => {
             state.search = action.payload
         },
+        setFilters: (state, action) => {
+            state.categoryId = +action.payload.categoryId
+            state.sortType = action.payload.sort
+            state.pagination = +action.payload.pagination
+        },
     },
 })
 
-export const { setCategoryId, setSortType, setPagination, setSearch } =
-    filterSlice.actions
+export const {
+    setCategoryId,
+    setSortType,
+    setPagination,
+    setSearch,
+    setFilters,
+} = filterSlice.actions
 
 export default filterSlice.reducer
