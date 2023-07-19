@@ -97,11 +97,15 @@ body {
   }
 
   &__clear {
+    background-color: inherit;
+    border: none;
     display: flex;
     align-items: center;
     cursor: pointer;
     @include noselect();
-
+    &:active {
+      transform: scale(0.98);
+    }
     span {
       display: inline-block;
       margin-left: 7px;
