@@ -33,5 +33,19 @@
     p {
       color: #7b7b7b;
     }
+    a {
+      @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+    }
+    div {
+      @media (max-width: 768px) {
+        text-align: center;
+      }
+    }
   }
 }

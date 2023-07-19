@@ -58,7 +58,7 @@ const Home = () => {
 
     // Подгрузка пицц и отправка параметров (категория, фильтры, пагинация, поиск)
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 310)
 
         if (!isSearch.current) {
             fetchPizzas()
@@ -68,7 +68,7 @@ const Home = () => {
     }, [categoryId, sortType, search, pagination])
 
     const fetchPizzas = () => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 310)
         setIsLoading(true)
 
         const order = sortType.sort.includes('-') ? 'desc' : 'asc'

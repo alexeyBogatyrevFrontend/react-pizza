@@ -20,7 +20,7 @@ const Cart = () => {
     }
 
     return (
-        <div style={{ maxWidth: '820px', margin: '90px auto' }}>
+        <div className={c.cart__wrapper}>
             {items.length ? (
                 <div className="cart">
                     <div className="cart__top">

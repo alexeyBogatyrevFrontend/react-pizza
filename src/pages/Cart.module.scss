@@ -11,6 +11,9 @@
         font-weight: 700;
         line-height: normal;
         letter-spacing: 0.32px;
+        @media (max-width: 768px) {
+            font-size: 26px;
+        }
     }
     p {
         color: #777;
@@ -20,8 +23,19 @@
         font-weight: 400;
         line-height: 145.4%;
         letter-spacing: 0.18px;
+        @media (max-width: 768px) {
+            font-size: 16px;
+        }
     }
     img {
         margin: 50px 0 70px 0;
+        @media (max-width: 768px) {
+            width: 250px;
+        }
     }
+}
+
+.cart__wrapper {
+    max-width: 820px;
+    margin: 0px auto;
 }

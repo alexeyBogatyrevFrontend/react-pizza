@@ -76,13 +76,20 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media (max-width: 475px) {
+      flex-direction: column;
+      gap: 15px;
+    }
   }
 
   .content__title {
     display: flex;
     align-items: center;
     font-size: 32px;
-
+    @media (max-width: 768px) {
+      font-size: 26px;
+      margin: 0;
+    }
     svg {
       position: relative;
       top: -2px;
@@ -137,20 +144,41 @@ body {
 
   &__item {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
     width: 100%;
     border-top: 1px solid $gray-line;
     padding-top: 30px;
     margin-top: 30px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    &-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      &:first-child {
+        justify-content: start;
+      }
+      @media (max-width: 768px) {
+        justify-content: center;
+        &:first-child {
+          justify-content: center;
+        }
+      }
+    }
 
     &-img {
       display: flex;
       align-items: center;
-      margin-right: 15px;
-      width: 10%;
-
+      width: 100px;
       img {
-        width: 80px;
-        height: 80px;
+        max-width: 100%;
       }
     }
 
@@ -158,18 +186,19 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 40%;
 
       h3 {
         font-weight: bold;
         font-size: 22px;
         line-height: 27px;
         letter-spacing: 0.01em;
+        white-space: nowrap;
       }
 
       p {
         font-size: 18px;
         color: #8d8d8d;
+        white-space: nowrap;
       }
     }
 
@@ -177,8 +206,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 13%;
-
+      gap: 10px;
       &-minus {
         svg {
           path:first-of-type {
@@ -196,7 +224,6 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 33%;
 
       b {
         font-weight: bold;
@@ -209,7 +236,6 @@ body {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      width: 4%;
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);
@@ -254,13 +280,24 @@ body {
           }
         }
       }
+      @media (max-width: 475px) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
     }
 
     &-buttons {
       display: flex;
       justify-content: space-between;
       margin-top: 40px;
-
+      @media (max-width: 475px) {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
       .go-back-btn {
         display: flex;
         align-items: center;
