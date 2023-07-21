@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Categories from '../components/categories/Categories'
 import Sort from '../components/sort/Sort'
 import Skeleton from '../components/UI/pizzaLoader/Skeleton'
@@ -6,11 +6,11 @@ import PizzaBlock from '../components/pizza-block/PizzaBlock'
 
 import Pagination from '../components/pagination/Pagination'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
 
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
 import { setFilters } from '../redux/slices/filterSlice'
+import { fetchPizzas } from '../redux/slices/pizzasSlice'
 
 export const list = [
     { name: 'популярности +', sort: 'rating' },
@@ -40,9 +40,7 @@ const Home = () => {
     const { categoryId, sortType, pagination, search } = useSelector(
         (state) => state.filterSlice
     )
-
-    const [pizzas, setPizzas] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
+    const { items, status } = useSelector((state) => state.pizzasSlice)
 
     // Парсим из параметров при первой загрузке
     useEffect(() => {
@@ -61,29 +59,29 @@ const Home = () => {
         window.scrollTo(0, 310)
 
         if (!isSearch.current) {
-            fetchPizzas()
+            getPizzas()
         }
 
         isSearch.current = false
     }, [categoryId, sortType, search, pagination])
 
-    const fetchPizzas = () => {
+    const getPizzas = () => {
         window.scrollTo(0, 310)
-        setIsLoading(true)
 
         const order = sortType.sort.includes('-') ? 'desc' : 'asc'
         const sortBy = sortType.sort.replace('-', '')
         const category = categoryId > 0 ? `category=${categoryId}` : ''
         const searchValue = search ? `search=${search}` : ''
 
-        axios
-            .get(
-                `https://64abcd609edb4181202e911b.mockapi.io/pizzas?page=${pagination}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${searchValue}`
-            )
-            .then((res) => {
-                setPizzas(res.data)
-                setIsLoading(false)
+        dispatch(
+            fetchPizzas({
+                order,
+                sortBy,
+                category,
+                searchValue,
+                pagination,
             })
+        )
     }
 
     // Добавление параметров в url
@@ -107,13 +105,23 @@ const Home = () => {
                 <Sort />
             </div>
             <h2 className="content__title">{categories[categoryId]} пиццы</h2>
-            <div className="content__items">
-                {isLoading
-                    ? [...new Array(10)].map((_, i) => <Skeleton key={i} />)
-                    : pizzas.map((pizza) => (
-                          <PizzaBlock key={pizza.id} pizza={pizza} />
-                      ))}
-            </div>
+            {status === 'error' ? (
+                <div className="content__error-info">
+                    <h2>Произошла ошибка 😕</h2>
+                    <p>
+                        К сожалению, не удалось получить пиццы. <br />{' '}
+                        Попробуйте повторит позже
+                    </p>
+                </div>
+            ) : (
+                <div className="content__items">
+                    {status === 'loading'
+                        ? [...new Array(10)].map((_, i) => <Skeleton key={i} />)
+                        : items.map((pizza) => (
+                              <PizzaBlock key={pizza.id} pizza={pizza} />
+                          ))}
+                </div>
+            )}
             <Pagination />
         </>
     )
