@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Cart from './pages/Cart'
 import NotFound from './pages/NotFound'
+import Pizza from './pages/Pizza'
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                     <Routes>
                         <Route path="/home" exact element={<Home />} />
                         <Route path="/cart" element={<Cart />} />
+                        <Route path="/pizza/:id" element={<Pizza />} />
                         <Route path="/not-found" element={<NotFound />} />
                         <Route
                             path="*"

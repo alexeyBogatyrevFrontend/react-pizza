@@ -114,12 +114,20 @@ const Home = () => {
                     </p>
                 </div>
             ) : (
-                <div className="content__items">
-                    {status === 'loading'
-                        ? [...new Array(10)].map((_, i) => <Skeleton key={i} />)
-                        : items.map((pizza) => (
-                              <PizzaBlock key={pizza.id} pizza={pizza} />
-                          ))}
+                <div className={'content__items'}>
+                    {status === 'loading' ? (
+                        [...new Array(10)].map((_, i) => <Skeleton key={i} />)
+                    ) : items.length ? (
+                        items.map((pizza) => (
+                            <PizzaBlock key={pizza.id} pizza={pizza} />
+                        ))
+                    ) : (
+                        <div className="content__error-info">
+                            <h2 style={{ whiteSpace: 'nowrap' }}>
+                                Пицц с таким названием нет 😕
+                            </h2>
+                        </div>
+                    )}
                 </div>
             )}
             <Pagination />
