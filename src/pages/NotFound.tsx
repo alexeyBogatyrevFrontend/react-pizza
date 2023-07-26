@@ -4,7 +4,7 @@ import MyButton from '../components/UI/button/MyButton'
 
 import c from './NotFound.module.scss'
 
-const NotFound = () => {
+const NotFound: React.FC = () => {
     return (
         <div className={c.notFound}>
             <span>😕</span>

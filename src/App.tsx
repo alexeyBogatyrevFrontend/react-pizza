@@ -1,5 +1,3 @@
-import React from 'react'
-
 import './scss/app.scss'
 import Header from './components/header/Header'
 import Home from './pages/Home'
@@ -15,7 +13,7 @@ const App = () => {
             <div className="content">
                 <div className="container">
                     <Routes>
-                        <Route path="/home" exact element={<Home />} />
+                        <Route path="/home" element={<Home />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/pizza/:id" element={<Pizza />} />
                         <Route path="/not-found" element={<NotFound />} />

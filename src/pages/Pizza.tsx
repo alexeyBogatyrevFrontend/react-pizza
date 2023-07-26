@@ -4,8 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import c from './Pizza.module.scss'
 
-const Pizza = () => {
-    const [pizza, setPizza] = useState()
+const Pizza: React.FC = () => {
+    const [pizza, setPizza] = useState<{
+        imageUrl: string
+        title: string
+        description: string
+        price: number
+    }>()
 
     const { id } = useParams()
     const navigate = useNavigate()

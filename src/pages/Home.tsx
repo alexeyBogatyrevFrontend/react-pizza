@@ -2,7 +2,9 @@ import React, { useEffect, useRef } from 'react'
 import Categories from '../components/categories/Categories'
 import Sort from '../components/sort/Sort'
 import Skeleton from '../components/UI/pizzaLoader/Skeleton'
-import PizzaBlock from '../components/pizza-block/PizzaBlock'
+import PizzaBlock, {
+    PizzaBlockType,
+} from '../components/pizza-block/PizzaBlock'
 
 import Pagination from '../components/pagination/Pagination'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,7 +14,12 @@ import { useNavigate } from 'react-router-dom'
 import { setFilters } from '../redux/slices/filterSlice'
 import { fetchPizzas } from '../redux/slices/pizzasSlice'
 
-export const list = [
+type listType = {
+    name: string
+    sort: string
+}
+
+export const list: listType[] = [
     { name: 'популярности +', sort: 'rating' },
     { name: 'популярности -', sort: '-rating' },
     { name: 'возрастанию цены', sort: 'price' },
@@ -30,7 +37,7 @@ export const categories = [
     'Закрытые',
 ]
 
-const Home = () => {
+const Home: React.FC = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -38,9 +45,9 @@ const Home = () => {
     const isMounted = useRef(false)
 
     const { categoryId, sortType, pagination, search } = useSelector(
-        (state) => state.filterSlice
+        (state: any) => state.filterSlice
     )
-    const { items, status } = useSelector((state) => state.pizzasSlice)
+    const { items, status } = useSelector((state: any) => state.pizzasSlice)
 
     // Парсим из параметров при первой загрузке
     useEffect(() => {
@@ -74,6 +81,7 @@ const Home = () => {
         const searchValue = search ? `search=${search}` : ''
 
         dispatch(
+            // @ts-ignore
             fetchPizzas({
                 order,
                 sortBy,
@@ -118,8 +126,8 @@ const Home = () => {
                     {status === 'loading' ? (
                         [...new Array(10)].map((_, i) => <Skeleton key={i} />)
                     ) : items.length ? (
-                        items.map((pizza) => (
-                            <PizzaBlock key={pizza.id} pizza={pizza} />
+                        items.map((pizza: PizzaBlockType, index: number) => (
+                            <PizzaBlock key={index} {...pizza} />
                         ))
                     ) : (
                         <div className="content__error-info">

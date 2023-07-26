@@ -3,21 +3,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from '../../redux/slices/filterSlice'
 import { list } from '../../pages/Home'
 
-const Sort = () => {
-    const sortType = useSelector((state) => state.filterSlice.sortType)
+const Sort: React.FC = () => {
+    const sortType = useSelector((state: any) => state.filterSlice.sortType)
     const dispatch = useDispatch()
 
-    const sortRef = useRef()
+    const sortRef = useRef<HTMLDivElement>(null)
 
     const [popup, setPopup] = useState(false)
 
-    const currentSort = (sort) => {
+    const currentSort = (sort: {}) => {
         dispatch(setSortType(sort))
         setPopup(false)
     }
 
     useEffect(() => {
-        const clickOutsideHandler = (event) => {
+        const clickOutsideHandler = (event: any) => {
             if (
                 sortRef.current &&
                 !event.composedPath().includes(sortRef.current)

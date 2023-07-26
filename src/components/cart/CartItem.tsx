@@ -2,32 +2,63 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addItem, minusItem, removeItem } from '../../redux/slices/cartSlice'
 
-const CartItem = ({ item }) => {
+export type CartItemType = {
+    id: string
+    title: string
+    type: string
+    size: number
+    price: number
+    count: number
+    imageUrl: string
+}
+
+const CartItem: React.FC<CartItemType> = ({
+    id,
+    title,
+    type,
+    size,
+    price,
+    count,
+    imageUrl,
+}) => {
     const dispatch = useDispatch()
 
     const addItemHandler = () => {
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+            type,
+            size,
+        }
         dispatch(addItem(item))
     }
 
     const minusItemHandler = () => {
-        if (item.count > 1) {
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+            type,
+            size,
+        }
+
+        if (count > 1) {
             dispatch(minusItem(item))
         } else {
             if (
-                window.confirm(
-                    `Ты точно хочешь удалить "${item.title}" из заказа?`
-                )
+                window.confirm(`Ты точно хочешь удалить "${title}" из заказа?`)
             ) {
-                dispatch(removeItem(item.id))
+                dispatch(removeItem(id))
             }
         }
     }
 
     const removeItemHandler = () => {
-        if (
-            window.confirm(`Ты точно хочешь удалить "${item.title}" из заказа?`)
-        ) {
-            dispatch(removeItem(item.id))
+        if (window.confirm(`Ты точно хочешь удалить "${title}" из заказа?`)) {
+            dispatch(removeItem(id))
         }
     }
 
@@ -35,12 +66,12 @@ const CartItem = ({ item }) => {
         <div className="cart__item">
             <div className="cart__item-block">
                 <div className="cart__item-img">
-                    <img src={`${item.imageUrl}`} alt="Pizza" />
+                    <img src={`${imageUrl}`} alt="Pizza" />
                 </div>
                 <div className="cart__item-info">
-                    <h3>{item.title}</h3>
+                    <h3>{title}</h3>
                     <p>
-                        {item.type} тесто, {item.size} см.
+                        {type} тесто, {size} см.
                     </p>
                 </div>
             </div>
@@ -67,7 +98,7 @@ const CartItem = ({ item }) => {
                             ></path>
                         </svg>
                     </button>
-                    <b>{item.count}</b>
+                    <b>{count}</b>
                     <button
                         className="button button--outline button--circle cart__item-count-plus"
                         onClick={addItemHandler}
@@ -91,7 +122,7 @@ const CartItem = ({ item }) => {
                     </button>
                 </div>
                 <div className="cart__item-price">
-                    <b>{item.price * item.count} ₽</b>
+                    <b>{price * count} ₽</b>
                 </div>
                 <div className="cart__item-remove">
                     <button

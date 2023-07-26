@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import MyButton from '../components/UI/button/MyButton'
 
 import c from './Cart.module.scss'
-import CartItem from '../components/cart/CartItem'
+import CartItem, { CartItemType } from '../components/cart/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearItems } from '../redux/slices/cartSlice'
 
-const Cart = () => {
+const Cart: React.FC = () => {
     const { totalPrice, totalCount, items } = useSelector(
-        (state) => state.cartSlice
+        (state: any) => state.cartSlice
     )
     const dispatch = useDispatch()
 
@@ -34,8 +34,8 @@ const Cart = () => {
                         </button>
                     </div>
                     <div className="content__items">
-                        {items.map((item, index) => (
-                            <CartItem key={index} item={item} />
+                        {items.map((item: CartItemType, index: number) => (
+                            <CartItem key={index} {...item} />
                         ))}
                     </div>
                     <div className="cart__bottom">

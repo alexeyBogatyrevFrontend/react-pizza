@@ -4,8 +4,8 @@ import c from './Pagination.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPagination } from '../../redux/slices/filterSlice'
 
-const Pagination = () => {
-    const pagination = useSelector((state) => state.filterSlice.pagination)
+const Pagination: React.FC = () => {
+    const pagination = useSelector((state: any) => state.filterSlice.pagination)
     const dispatch = useDispatch()
 
     return (

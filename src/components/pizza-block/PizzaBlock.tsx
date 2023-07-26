@@ -3,11 +3,29 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../../redux/slices/cartSlice'
 import { Link } from 'react-router-dom'
 
-export const typeNames = ['тонкое', 'традиционное']
+export const typeNames: string[] = ['тонкое', 'традиционное']
 
-const PizzaBlock = ({ pizza }) => {
-    const cartItem = useSelector((state) =>
-        state.cartSlice.items.find((obj) => obj.id === pizza.id)
+export type PizzaBlockType = {
+    id: string
+    title: string
+    price: number
+    imageUrl: string
+    sizes: number[]
+    types: number[]
+    rating: number
+}
+
+const PizzaBlock: React.FC<PizzaBlockType> = ({
+    id,
+    title,
+    price,
+    imageUrl,
+    sizes,
+    types,
+    rating,
+}) => {
+    const cartItem = useSelector((state: any) =>
+        state.cartSlice.items.find((obj: any) => obj.id === id)
     )
     const dispatch = useDispatch()
 
@@ -18,29 +36,29 @@ const PizzaBlock = ({ pizza }) => {
 
     const onClickAdd = () => {
         const item = {
-            id: pizza.id,
-            title: pizza.title,
-            price: pizza.price,
-            imageUrl: pizza.imageUrl,
+            id: id,
+            title: title,
+            price: price,
+            imageUrl: imageUrl,
             type: typeNames[activeType],
-            size: pizza.sizes[activeSize],
+            size: sizes[activeSize],
         }
         dispatch(addItem(item))
     }
 
     return (
         <div className="pizza-block">
-            <Link to={`/pizza/${pizza.id}`}>
+            <Link to={`/pizza/${id}`}>
                 <img
                     className="pizza-block__image"
-                    src={pizza.imageUrl}
+                    src={imageUrl}
                     alt="Pizza"
                 />
             </Link>
-            <h4 className="pizza-block__title">{pizza.title}</h4>
+            <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    {pizza.types.map((type, index) => (
+                    {types.map((type: number, index: number) => (
                         <li
                             className={activeType === index ? 'active' : ''}
                             key={index}
@@ -51,7 +69,7 @@ const PizzaBlock = ({ pizza }) => {
                     ))}
                 </ul>
                 <ul>
-                    {pizza.sizes.map((size, index) => (
+                    {sizes.map((size: number, index: number) => (
                         <li
                             className={activeSize === index ? 'active' : ''}
                             key={index}
@@ -63,7 +81,7 @@ const PizzaBlock = ({ pizza }) => {
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {pizza.price} ₽</div>
+                <div className="pizza-block__price">от {price} ₽</div>
                 <button
                     className="button button--outline button--add"
                     onClick={() => onClickAdd()}
