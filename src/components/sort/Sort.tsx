@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from '../../redux/slices/filterSlice'
 import { list } from '../../pages/Home'
 
+type popupType = MouseEvent & {
+    path: Node[]
+}
+
 const Sort: React.FC = () => {
     const sortType = useSelector((state: any) => state.filterSlice.sortType)
     const dispatch = useDispatch()
@@ -17,10 +21,12 @@ const Sort: React.FC = () => {
     }
 
     useEffect(() => {
-        const clickOutsideHandler = (event: any) => {
+        const clickOutsideHandler = (event: MouseEvent) => {
+            const _event = event as popupType
+
             if (
                 sortRef.current &&
-                !event.composedPath().includes(sortRef.current)
+                !_event.composedPath().includes(sortRef.current)
             ) {
                 setPopup(false)
             }

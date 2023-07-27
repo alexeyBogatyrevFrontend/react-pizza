@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
-import { setFilters } from '../redux/slices/filterSlice'
+import { setCategoryId, setFilters } from '../redux/slices/filterSlice'
 import { fetchPizzas } from '../redux/slices/pizzasSlice'
 
 type listType = {
@@ -92,6 +92,10 @@ const Home: React.FC = () => {
         )
     }
 
+    const sortByCategory = (id: number) => {
+        dispatch(setCategoryId(id))
+    }
+
     // Добавление параметров в url
     useEffect(() => {
         if (isMounted.current) {
@@ -109,7 +113,10 @@ const Home: React.FC = () => {
     return (
         <>
             <div className="content__top">
-                <Categories categories={categories} />
+                <Categories
+                    categories={categories}
+                    sortByCategoryHandler={sortByCategory}
+                />
                 <Sort />
             </div>
             <h2 className="content__title">{categories[categoryId]} пиццы</h2>

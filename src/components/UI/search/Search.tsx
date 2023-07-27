@@ -1,4 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, {
+    ChangeEvent,
+    ChangeEventHandler,
+    useCallback,
+    useRef,
+    useState,
+} from 'react'
 
 import c from './Search.module.scss'
 
@@ -26,7 +32,7 @@ const Search: React.FC = () => {
         []
     )
 
-    const onChangeInput = (e: any) => {
+    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value)
         updateSearchValue(e.target.value)
     }

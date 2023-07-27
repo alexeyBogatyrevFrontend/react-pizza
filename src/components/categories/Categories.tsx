@@ -1,18 +1,16 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setCategoryId } from '../../redux/slices/filterSlice'
+import { useSelector } from 'react-redux'
 
 type CategoriesType = {
     categories: string[]
+    sortByCategoryHandler: (id: number) => void
 }
 
-const Categories: React.FC<CategoriesType> = ({ categories }) => {
+const Categories: React.FC<CategoriesType> = ({
+    categories,
+    sortByCategoryHandler,
+}) => {
     const categoryId = useSelector((state: any) => state.filterSlice.categoryId)
-    const dispatch = useDispatch()
-
-    const sortByCategory = (id: number) => {
-        dispatch(setCategoryId(id))
-    }
 
     return (
         <div className="categories">
@@ -21,7 +19,7 @@ const Categories: React.FC<CategoriesType> = ({ categories }) => {
                     <li
                         className={categoryId === index ? 'active' : ''}
                         key={index}
-                        onClick={() => sortByCategory(index)}
+                        onClick={() => sortByCategoryHandler(index)}
                     >
                         {category}
                     </li>
