@@ -5,12 +5,10 @@ import MyButton from '../components/UI/button/MyButton'
 import c from './Cart.module.scss'
 import CartItem, { CartItemType } from '../components/cart/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearItems } from '../redux/slices/cartSlice'
+import { clearItems, selectCart } from '../redux/slices/cartSlice'
 
 const Cart: React.FC = () => {
-    const { totalPrice, totalCount, items } = useSelector(
-        (state: any) => state.cartSlice
-    )
+    const { totalPrice, totalCount, items } = useSelector(selectCart)
     const dispatch = useDispatch()
 
     const clearCart = () => {

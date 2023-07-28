@@ -31,22 +31,14 @@ const CartItem: React.FC<CartItemType> = ({
             imageUrl,
             type,
             size,
+            count: 0,
         }
         dispatch(addItem(item))
     }
 
     const minusItemHandler = () => {
-        const item = {
-            id,
-            title,
-            price,
-            imageUrl,
-            type,
-            size,
-        }
-
         if (count > 1) {
-            dispatch(minusItem(item))
+            dispatch(minusItem(id))
         } else {
             if (
                 window.confirm(`Ты точно хочешь удалить "${title}" из заказа?`)

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSortType } from '../../redux/slices/filterSlice'
+import { setSortType, sortType } from '../../redux/slices/filterSlice'
 import { list } from '../../pages/Home'
 
 type popupType = MouseEvent & {
@@ -15,7 +15,7 @@ const Sort: React.FC = () => {
 
     const [popup, setPopup] = useState(false)
 
-    const currentSort = (sort: {}) => {
+    const currentSort = (sort: sortType) => {
         dispatch(setSortType(sort))
         setPopup(false)
     }

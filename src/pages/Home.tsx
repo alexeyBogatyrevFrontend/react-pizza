@@ -7,25 +7,31 @@ import PizzaBlock, {
 } from '../components/pizza-block/PizzaBlock'
 
 import Pagination from '../components/pagination/Pagination'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
-import { setCategoryId, setFilters } from '../redux/slices/filterSlice'
-import { fetchPizzas } from '../redux/slices/pizzasSlice'
+import {
+    selectFilter,
+    setCategoryId,
+    setFilters,
+    sortPropertyEnum,
+} from '../redux/slices/filterSlice'
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzasSlice'
+import { useAppDispatch } from '../redux/store'
 
 type listType = {
     name: string
-    sort: string
+    sort: sortPropertyEnum
 }
 
 export const list: listType[] = [
-    { name: 'популярности +', sort: 'rating' },
-    { name: 'популярности -', sort: '-rating' },
-    { name: 'возрастанию цены', sort: 'price' },
-    { name: 'убыванию цены', sort: '-price' },
-    { name: 'алфавиту [A - Я]', sort: 'title' },
-    { name: 'алфавиту [Я - А]', sort: '-title' },
+    { name: 'популярности +', sort: sortPropertyEnum.RATING_ASC },
+    { name: 'популярности -', sort: sortPropertyEnum.RATING_DESC },
+    { name: 'возрастанию цены', sort: sortPropertyEnum.PRICE_ASC },
+    { name: 'убыванию цены', sort: sortPropertyEnum.PRICE_DESC },
+    { name: 'алфавиту [A - Я]', sort: sortPropertyEnum.TITLE_ASC },
+    { name: 'алфавиту [Я - А]', sort: sortPropertyEnum.TITLE_DESC },
 ]
 
 export const categories = [
@@ -38,16 +44,15 @@ export const categories = [
 ]
 
 const Home: React.FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const isSearch = useRef(false)
     const isMounted = useRef(false)
 
-    const { categoryId, sortType, pagination, search } = useSelector(
-        (state: any) => state.filterSlice
-    )
-    const { items, status } = useSelector((state: any) => state.pizzasSlice)
+    const { categoryId, sortType, pagination, search } =
+        useSelector(selectFilter)
+    const { items, status } = useSelector(selectPizzaData)
 
     // Парсим из параметров при первой загрузке
     useEffect(() => {
@@ -56,7 +61,15 @@ const Home: React.FC = () => {
 
             const sort = list.find((obj) => obj.sort === params.sortType)
 
-            dispatch(setFilters({ ...params, sort }))
+            dispatch(
+                setFilters({
+                    categoryId: Number(params.categoryId),
+                    sortType: sort ? sort : list[0],
+                    pagination: Number(params.pagination),
+                    search: '',
+                })
+            )
+
             isSearch.current = true
         }
     }, [])
@@ -81,7 +94,6 @@ const Home: React.FC = () => {
         const searchValue = search ? `search=${search}` : ''
 
         dispatch(
-            // @ts-ignore
             fetchPizzas({
                 order,
                 sortBy,
