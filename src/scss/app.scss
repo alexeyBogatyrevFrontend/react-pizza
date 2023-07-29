@@ -184,6 +184,12 @@ body {
           justify-content: center;
         }
       }
+      @media (max-width: 500px) {
+        flex-direction: column;
+      }
+      &:nth-child(2) {
+        max-width: 300px;
+      }
     }
 
     &-img {
@@ -212,6 +218,9 @@ body {
         font-size: 18px;
         color: #8d8d8d;
         white-space: nowrap;
+        @media (max-width: 500px) {
+          text-align: center;
+        }
       }
     }
 

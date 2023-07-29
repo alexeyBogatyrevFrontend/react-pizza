@@ -6,27 +6,28 @@ type CategoriesType = {
     sortByCategoryHandler: (id: number) => void
 }
 
-const Categories: React.FC<CategoriesType> = ({
-    categories,
-    sortByCategoryHandler,
-}) => {
-    const categoryId = useSelector((state: any) => state.filterSlice.categoryId)
+const Categories: React.FC<CategoriesType> = React.memo(
+    ({ categories, sortByCategoryHandler }) => {
+        const categoryId = useSelector(
+            (state: any) => state.filterSlice.categoryId
+        )
 
-    return (
-        <div className="categories">
-            <ul>
-                {categories.map((category: string, index: number) => (
-                    <li
-                        className={categoryId === index ? 'active' : ''}
-                        key={index}
-                        onClick={() => sortByCategoryHandler(index)}
-                    >
-                        {category}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    )
-}
+        return (
+            <div className="categories">
+                <ul>
+                    {categories.map((category: string, index: number) => (
+                        <li
+                            className={categoryId === index ? 'active' : ''}
+                            key={index}
+                            onClick={() => sortByCategoryHandler(index)}
+                        >
+                            {category}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
+)
 
 export default Categories

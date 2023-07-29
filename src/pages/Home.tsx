@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import Categories from '../components/categories/Categories'
 import Sort from '../components/sort/Sort'
 import Skeleton from '../components/UI/pizzaLoader/Skeleton'
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
 
     // Подгрузка пицц и отправка параметров (категория, фильтры, пагинация, поиск)
     useEffect(() => {
-        window.scrollTo(0, 310)
+        window.scrollTo(0, 0)
 
         if (!isSearch.current) {
             getPizzas()
@@ -86,7 +86,7 @@ const Home: React.FC = () => {
     }, [categoryId, sortType, search, pagination])
 
     const getPizzas = () => {
-        window.scrollTo(0, 310)
+        window.scrollTo(0, 0)
 
         const order = sortType.sort.includes('-') ? 'desc' : 'asc'
         const sortBy = sortType.sort.replace('-', '')
@@ -104,9 +104,9 @@ const Home: React.FC = () => {
         )
     }
 
-    const sortByCategory = (id: number) => {
+    const sortByCategory = useCallback((id: number) => {
         dispatch(setCategoryId(id))
-    }
+    }, [])
 
     // Добавление параметров в url
     useEffect(() => {
@@ -131,7 +131,13 @@ const Home: React.FC = () => {
                 />
                 <Sort />
             </div>
-            <h2 className="content__title">{categories[categoryId]} пиццы</h2>
+            {items.length ? (
+                <h2 className="content__title">
+                    {categories[categoryId]} пиццы
+                </h2>
+            ) : (
+                ''
+            )}
             {status === 'error' ? (
                 <div className="content__error-info">
                     <h2>Произошла ошибка 😕</h2>
@@ -149,9 +155,12 @@ const Home: React.FC = () => {
                             <PizzaBlock key={index} {...pizza} />
                         ))
                     ) : (
-                        <div className="content__error-info">
+                        <div
+                            className="content__error-info"
+                            style={{ margin: '30px auto' }}
+                        >
                             <h2 style={{ whiteSpace: 'nowrap' }}>
-                                Пицц с таким названием нет 😕
+                                Пицц нет 😕
                             </h2>
                         </div>
                     )}
