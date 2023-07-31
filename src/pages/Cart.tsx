@@ -5,7 +5,8 @@ import MyButton from '../components/UI/button/MyButton'
 import c from './Cart.module.scss'
 import CartItem, { CartItemType } from '../components/cart/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearItems, selectCart } from '../redux/slices/cartSlice'
+import { clearItems } from '../redux/slices/cart/slice'
+import { selectCart } from '../redux/slices/cart/selectors'
 
 const Cart: React.FC = () => {
     const { totalPrice, totalCount, items } = useSelector(selectCart)
@@ -48,7 +49,7 @@ const Cart: React.FC = () => {
                             </span>
                         </div>
                         <div className="cart__bottom-buttons">
-                            <Link to="/home">
+                            <Link to="/">
                                 <MyButton
                                     style={{
                                         border: '1px solid #D3D3D3',
@@ -83,7 +84,7 @@ const Cart: React.FC = () => {
                         src="/img/empty-cart.svg"
                         alt="empty-cart"
                     />
-                    <Link to="/home">
+                    <Link to="/">
                         <MyButton style={{ background: '#282828' }}>
                             Вернуться назад
                         </MyButton>

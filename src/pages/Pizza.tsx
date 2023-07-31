@@ -1,8 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import c from './Pizza.module.scss'
+import MyButton from '../components/UI/button/MyButton'
 
 const Pizza: React.FC = () => {
     const [pizza, setPizza] = useState<{
@@ -24,7 +25,7 @@ const Pizza: React.FC = () => {
                 setPizza(res.data)
             } catch (err) {
                 alert('Ошибка при получении пиццы')
-                navigate('/home')
+                navigate('/')
             }
         }
 
@@ -41,6 +42,9 @@ const Pizza: React.FC = () => {
             <h2>{pizza.title}</h2>
             <p>{pizza.description}</p>
             <h3>от {pizza.price} ₽</h3>
+            <Link to="/">
+                <MyButton>Назад</MyButton>
+            </Link>
         </div>
     )
 }

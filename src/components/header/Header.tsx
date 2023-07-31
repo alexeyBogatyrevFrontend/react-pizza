@@ -1,20 +1,30 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import Search from '../UI/search/Search'
-import { useSelector } from 'react-redux'
-import { selectCart } from '../../redux/slices/cartSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCart } from '../../redux/slices/cart/selectors'
 
 const Header: React.FC = () => {
-    const { totalPrice, totalCount } = useSelector(selectCart)
-
+    const { items, totalPrice, totalCount } = useSelector(selectCart)
     const location = useLocation()
+    const isMounted = useRef(false)
+    const dispatch = useDispatch()
+
+    // в первый рендер нечего не происходит
+    useEffect(() => {
+        if (isMounted.current) {
+            const json = JSON.stringify(items)
+            localStorage.setItem('cartItems', json)
+        }
+        isMounted.current = true
+    }, [items])
 
     return (
         <header className="header">
             <div className="container">
                 <div className="header__logo">
-                    <Link to="/home">
+                    <Link to="/">
                         <img
                             width="38"
                             src="/img/pizza-logo.svg"

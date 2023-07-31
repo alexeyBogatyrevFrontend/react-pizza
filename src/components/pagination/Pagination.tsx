@@ -2,7 +2,7 @@ import React from 'react'
 
 import c from './Pagination.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPagination } from '../../redux/slices/filterSlice'
+import { setPagination } from '../../redux/slices/filter/slice'
 
 const Pagination: React.FC = () => {
     const pagination = useSelector((state: any) => state.filterSlice.pagination)

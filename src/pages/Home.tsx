@@ -11,14 +11,12 @@ import { useSelector } from 'react-redux'
 
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
-import {
-    selectFilter,
-    setCategoryId,
-    setFilters,
-    sortPropertyEnum,
-} from '../redux/slices/filterSlice'
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzasSlice'
 import { useAppDispatch } from '../redux/store'
+import { selectFilter } from '../redux/slices/filter/selectors'
+import { setCategoryId, setFilters } from '../redux/slices/filter/slice'
+import { sortPropertyEnum } from '../redux/slices/filter/types'
+import { fetchPizzas } from '../redux/slices/pizza/slice'
+import { selectPizzaData } from '../redux/slices/pizza/selectors'
 
 type listType = {
     name: string

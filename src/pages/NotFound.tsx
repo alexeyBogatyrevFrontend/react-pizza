@@ -13,7 +13,7 @@ const NotFound: React.FC = () => {
                 К сожалению данная страница отсутствует в нашем интернет
                 магазине
             </p>
-            <Link to="/home">
+            <Link to="/">
                 <MyButton>На главную</MyButton>
             </Link>
         </div>
